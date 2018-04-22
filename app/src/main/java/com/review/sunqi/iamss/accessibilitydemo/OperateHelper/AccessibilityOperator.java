@@ -55,16 +55,13 @@ public class AccessibilityOperator {
         return false;
     }
 
-    private AccessibilityNodeInfo getRootNodeInfo() {
+    public AccessibilityNodeInfo getRootNodeInfo() {
         AccessibilityEvent curEvent = mAccessibilityEvent;
         AccessibilityNodeInfo nodeInfo = null;
         if (Build.VERSION.SDK_INT >= 16) {
             // 建议使用getRootInActiveWindow，这样不依赖当前的事件类型
             if (mAccessibilityService != null) {
                 nodeInfo = mAccessibilityService.getRootInActiveWindow();
-                if (nodeInfo == null) {
-                    nodeInfo = curEvent.getSource();
-                }
                 AccessibilityLog.printLog("nodeInfo: " + nodeInfo);
             }
             // 下面这个必须依赖当前的AccessibilityEvent
