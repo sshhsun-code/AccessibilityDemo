@@ -3,6 +3,7 @@
     package="com.review.sunqi.iamss.accessibilitydemo">
 
     <application
+        android:name=".DemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +20,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.AccessibilityPermOpenActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:process=":BackgroundService"
+            android:taskAffinity="com.open.helper"
+            android:theme="@style/Accessibility.Transparent.Activity" />
+
+        <activity android:name=".ui.AccessibilityActionActivity"
+            android:taskAffinity="com.open.helper2"
+            android:process=":BackgroundService"/>
+
+        <service android:name=".service.MyAccessibilityService"
+            android:label="@string/accessibility_tip"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":BackgroundService">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_config"/>
+        </service>
     </application>
 
 </manifest>

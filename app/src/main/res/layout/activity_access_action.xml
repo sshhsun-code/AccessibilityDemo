@@ -9,18 +9,11 @@
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:id="@+id/btn_open_access"
+        android:id="@+id/btn_click"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="开启辅助功能开关"/>
-
-    <Button
-        android:id="@+id/btn_access_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="执行辅助功能点击操作"/>
+        android:text="点击按钮"/>
 
 </RelativeLayout>
