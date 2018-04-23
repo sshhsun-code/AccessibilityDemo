@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.review.sunqi.iamss.accessibilitydemo.service.MyAccessibilityService;
 
@@ -55,5 +56,40 @@ public class AccessibilityUtil {
     public static Intent getAccessibilitySettingPageIntent(Context context) {
         // 一些品牌的手机可能不是这个Intent,需要适配
         return new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+    }
+
+    private String mAllNodeInfo = "";                                                          // 用于收集整个页面节点的信息
+
+    /**
+     * 通过递归，可以打印页面结构
+     * @param node
+     * @return
+     */
+    private String getAllNodeInfo(AccessibilityNodeInfo node) {
+        mAllNodeInfo = "";
+        getAllNodeInfo("", node);
+
+        if (mAllNodeInfo != null && !mAllNodeInfo.isEmpty()) {
+            mAllNodeInfo = "TypeId:" + "\n" + mAllNodeInfo;
+        }
+        return mAllNodeInfo;
+    }
+
+    private void getAllNodeInfo(String blank, AccessibilityNodeInfo node) {
+        if (node == null) {
+            return;
+        }
+        String className = node.getClassName().toString();
+        className = className.replace("android.widget.", "");
+        className = className.replace("android.view.", "");
+        String nodeText = node.getText() != null ? node.getText().toString() : "";
+        mAllNodeInfo += blank + className + ":" + nodeText + "\n";
+
+        blank += "  ";
+        if (node.getChildCount() > 0) {
+            for (int i = 0; i < node.getChildCount(); i++) {
+                getAllNodeInfo(blank, node.getChild(i));
+            }
+        }
     }
 }
