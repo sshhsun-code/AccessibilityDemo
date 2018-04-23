@@ -25,7 +25,9 @@
 同时将TYPE_WINDOW_CONTENT_CHANGED和TYPE_WINDOW_STATE_CHANGED做了对比解释：
 ![](http://o9m6aqy3r.bkt.clouddn.com/%E8%BE%85%E5%8A%A9%E5%8A%9F%E8%83%BD%E4%BA%8B%E4%BB%B6%E5%9B%9E%E8%B0%83%E5%AF%B9%E6%AF%94.png)
 
-也就是说，TYPE_WINDOW_CONTENT_CHANGED是在该页面树状结构上子树进行改动时，页面内容发生变化时，发出的回调，页面不发生。而TYPE_WINDOW_STATE_CHANGED事件是整个界面变化即跳转时，整个页面树结构发生变化时调用，具体比如页面跳转/切换/关闭时调用。并且这个事件是由页面的根节点rootInfo发出的。所以，只有当TYPE_WINDOW_STATE_CHANGED事件调用时，整个页面的根节点才可以得到，不为空。
+>**也就是说，TYPE_WINDOW_CONTENT_CHANGED是在该页面树状结构上子树进行改动时，页面内容发生变化时，发出的回调，页面不发生。而TYPE_WINDOW_STATE_CHANGED事件是整个界面变化即跳转时，整个页面树结构发生变化时调用，具体比如页面跳转/切换/关闭时调用。并且这个事件是由页面的根节点rootInfo发出的。所以，只有当TYPE_WINDOW_STATE_CHANGED事件调用时，整个页面的根节点才可以得到，不为空。**
+
+
 3.结论
 --
 **辅助功能中根节点的获取，是通过AccessibilityService.getRootInActiveWindow()得到的，而且必须是在TYPE_WINDOW_STATE_CHANGED回调后，才能获取到。和Activity等生命周期没有关系。实际使用中，辅助功能的流程事件一般是以onAccessibilityEvent来作为驱动的，根据eventType做不同的响应。同时，事件event中的getPackageName可以区分不同应用。所以，以Package为区分条件也可以减少，event回调使用错的情况。**
