@@ -15,7 +15,9 @@
 我们都知道，通过辅助功能，可以以根节点遍历整个布局，并根据ID或者文案进行控件查找。
 但是这个根节点的获取。一般是通过AccessibilityService.getRootInActiveWindow()来获取的，但是为什么会出现为空的现象呢？一开始我以为是跟Activity的生命周期有关，因为要获得这个根节点，应该是界面完全加载完成后才能获取，于是在Activity中的onWindowFocusChanged回调中，再次调用了 getRootInActiveWindow，结果发现还是为空，同样需要延时后，才不为空。于是我将，AccessibilityService中的onAccessibilityEvent，以及Activity中的调用联合打印log。发现结果如下：
 
+
 ![](http://o9m6aqy3r.bkt.clouddn.com/%E8%BE%85%E5%8A%A9%E5%8A%9F%E8%83%BD%E7%9B%B8%E5%85%B3%E6%89%93%E5%8D%B01.png)
+
 	
 整个页面的真正的根节点为 **info@80007558**,而真正这个对象的生成是在eventType: 32,即AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED回调事件后生产，在这之前的调用取得根节点时，要么为空，要么取到的对象是错的。那么**AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED**到底是什么事件呢？
 **<br>Google文档中这样描述：TYPE_WINDOW_STATE_CHANGED**
