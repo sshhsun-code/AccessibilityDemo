@@ -5,10 +5,12 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.review.sunqi.iamss.accessibilitydemo.utils.AccessibilityLog;
+import com.review.sunqi.iamss.accessibilitydemo.utils.AccessibilityUtil;
 
 import java.util.List;
 
@@ -81,6 +83,14 @@ public class AccessibilityOperator {
            return nodeInfo.findAccessibilityNodeInfosByText(text);
         }
         return null;
+    }
+
+    public void printPageInfo() {
+        AccessibilityNodeInfo rootNode = getRootNodeInfo();
+        if (rootNode != null) {
+            String pageInfo = AccessibilityUtil.getAllNodeInfo(rootNode);
+            Log.e("sunqi_log", "info = " + pageInfo);
+        }
     }
 
     /**

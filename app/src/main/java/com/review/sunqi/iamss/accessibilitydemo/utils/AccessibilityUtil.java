@@ -58,14 +58,14 @@ public class AccessibilityUtil {
         return new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
     }
 
-    private String mAllNodeInfo = "";                                                          // 用于收集整个页面节点的信息
+    private static String mAllNodeInfo = "";                                                          // 用于收集整个页面节点的信息
 
     /**
      * 通过递归，可以打印页面结构
      * @param node
      * @return
      */
-    private String getAllNodeInfo(AccessibilityNodeInfo node) {
+    public static String getAllNodeInfo(AccessibilityNodeInfo node) {
         mAllNodeInfo = "";
         getAllNodeInfo("", node);
 
@@ -75,7 +75,7 @@ public class AccessibilityUtil {
         return mAllNodeInfo;
     }
 
-    private void getAllNodeInfo(String blank, AccessibilityNodeInfo node) {
+    private static void getAllNodeInfo(String blank, AccessibilityNodeInfo node) {
         if (node == null) {
             return;
         }
